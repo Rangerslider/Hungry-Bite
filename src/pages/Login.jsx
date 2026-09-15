@@ -1,15 +1,21 @@
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
+import { showToast } from "../store/ui/toastSlice";
+import "../styles/auth.css";
 
 const Login = () => {
   const loginNameRef = useRef();
   const loginPasswordRef = useRef();
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(showToast("Successfully Login!"));
+    e.target.reset();
   };
 
   return (
@@ -18,8 +24,8 @@ const Login = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="6" md="6" sm="12" className="m-auto text-center">
-              <form className="form mb-5" onSubmit={submitHandler}>
+            <Col lg="5" md="8" className="m-auto text-center">
+              <form className="form auth__form mb-4 reveal" onSubmit={submitHandler}>
                 <div className="form__group">
                   <input
                     type="email"
@@ -36,9 +42,9 @@ const Login = () => {
                     ref={loginPasswordRef}
                   />
                 </div>
-              <button onClick={() => alert('Successfully Login!')} type="submit" className="addTOCart__btn"> Login </button>
+                <button type="submit" className="addTOCart__btn">Login</button>
               </form>
-              <Link to="/register">
+              <Link to="/register" className="auth__link">
                 Don't have an account? Create an account
               </Link>
             </Col>

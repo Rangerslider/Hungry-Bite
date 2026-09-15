@@ -1,7 +1,9 @@
 .checkout__bill{
     background: #61dafb63;
     padding: 30px;
-
+    border-radius: 16px;
+    position: sticky;
+    top: 100px;
 }
 
 .checkout__total{
@@ -15,6 +17,8 @@
         font-size: 0.9rem;
     }
     .checkout__bill {
+        position: static;
         margin-top: 40px;
+        padding: 20px;
     }
 }

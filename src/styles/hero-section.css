@@ -1,26 +1,22 @@
 .hero__content {
-    padding-top: 70px;
+    padding-top: 40px;
     background-image: url("../assets/pic/menu-bg.png");
 }
 
 .hero__title {
-    font-size: 2.5rem;
-    line-height: 55px;
+    font-size: clamp(1.8rem, 1.1rem + 2.8vw, 2.9rem);
+    line-height: 1.35;
 }
 
 .hero__title span {
     color: #61dafb;
 }
 
-.hero__img-wp{
+.hero__img {
     width: 100%;
-    height: 100%;
-    padding-left: 30px;
-} 
-
-.hero__img{
-    width: 100%;
-    height: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
     background-size: cover;
     background-position: center;
     animation: biani 4.5s linear infinite alternate;
@@ -49,55 +45,67 @@
     color: #777;
 }
 
-.hero__btns button {
+.hero__btns,
+.hero__service {
+    flex-wrap: wrap;
+    gap: 16px 32px;
+}
+
+.hero__btns button,
+.hero__btns a {
     min-width: 120px;
     min-height: 58px;
-    background: #f3f3f5;
-    box-shadow: 9px 9px 12px #b2b2b3, -9px -9px 12px #ffffff;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    gap: 6px;
     border-radius: 30px;
-    color: #0d0d25;
     text-transform: capitalize;
     text-align: center;
     border: 1px solid #61dafb !important;
     cursor: pointer;
     outline: none !important;
-    transition: 0.8s cubic-bezier(0.22, 0.78, 0.45, 1.02);
-    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.22, 0.78, 0.45, 1.02), box-shadow 0.4s;
     position: relative;
     z-index: 2;
-    padding: 6px 30px; 
-
-    border-color: #0d0d25;
-    box-shadow: inset 9px 9px 12px #cccccc, inset -9px -9px 12px #ffffff;
-    color: #0d0d25;
+    padding: 6px 30px;
 }
 
 .order__btn {
     background: #61dafb;
     color: #fff;
-    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(97, 218, 251, 0.4);
 }
 
-.order__btn:hover {
-    background: #61dafb;
+.order__btn i {
+    font-size: 1.2rem;
+    transition: transform 0.3s;
 }
+
+.order__btn:hover i {
+    transform: translateX(4px);
+}
+
 .all__foods-btn {
-    background: transparent;
-    border: 1px solid #61dafb !important;
-}
-.all__foods-btn a {
-    color: #61dafb;
-    border-color: #0d0d25;
+    background: #f3f3f5;
     color: #0d0d25;
+    box-shadow: inset 9px 9px 12px #cccccc, inset -9px -9px 12px #ffffff;
+}
+
+.hero__btns button:hover,
+.hero__btns a:hover {
+    transform: translateY(-3px);
+}
+
+.all__foods-btn:hover {
+    color: #61dafb;
 }
 
 .hero__service p {
     color: #212245;
     font-weight: 600;
     font-size: 0.9rem;
+    margin-bottom: 0;
 }
 
 .about-btn{
@@ -113,16 +121,19 @@
 .about__img{
     position: relative;
     overflow: hidden;
-    width: 200%;
-    height: 80%;
-    min-height: 400px;
-    background-size: cover;
-    background-position: center;
+    width: 100%;
+    aspect-ratio: 21 / 9;
     border-radius: 40px;
     box-shadow: 0 0 20px rgb(36 39 37 / 30%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+.about__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s ease;
+}
+.about__img:hover img {
+    transform: scale(1.05);
 }
 .shipping__icon i {
     padding: 5px;
@@ -132,19 +143,53 @@
     font-weight: 500 !important;
 }
 
+@media only screen and (max-width: 991px) {
+    .hero__img {
+        max-width: 420px;
+        margin-top: 40px;
+    }
+
+    .about__img {
+        aspect-ratio: 16 / 9;
+        border-radius: 28px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .hero__content {
+        padding-top: 10px;
+    }
+
+    .hero__btns button,
+    .hero__btns a {
+        min-height: 48px;
+        padding: 6px 22px;
+        font-size: 0.9rem;
+    }
+
+    .hero__img {
+        max-width: 300px;
+    }
+
+    .about-btn {
+        font-size: 16px;
+    }
+
+    .about__img {
+        aspect-ratio: 4 / 3;
+        border-radius: 22px;
+    }
+}
+
 @media (min-width: 2100px) {
     .about-btn{
         font-size: 40px;
         line-height: 60px;
         margin-bottom: 20px;
         background-size: 100% 10px;
-   
     }
 
     .about__img{
-        height: 30vw;
-        min-height: 280px;
         border-radius: 30px;
     }
-
 }

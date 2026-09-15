@@ -1,30 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import Helmet from "../components/Helmet/Helmet";
+import CommonSection from "../components/UI/common-section/CommonSection";
+import { showToast } from "../store/ui/toastSlice";
 import "../styles/contact.css";
 
+const emptyForm = { name: "", email: "", phone: "", message: "" };
+
 const Contact = () => {
+  const [form, setForm] = useState(emptyForm);
+  const dispatch = useDispatch();
+
+  const update = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(showToast("Thanks for Contact Us !"));
+    setForm(emptyForm);
+  };
+
   return (
-    <>
-      <section class="contact" id="contact">
-        <div class="row">
-          <form action="">
+    <Helmet title="Contact">
+      <CommonSection title="Contact" />
+      <section className="contact" id="contact">
+        <div className="container">
+          <form className="contact__form reveal" onSubmit={submitHandler}>
             <h3>get in touch</h3>
-            <div class="inputBox">
-              <span class="fas fa-user"></span>
-              <input type="text" placeholder="name" />
+            <div className="inputBox">
+              <i className="ri-user-line"></i>
+              <input type="text" name="name" placeholder="Name" value={form.name} onChange={update} required />
             </div>
-            <div class="inputBox">
-              <span class="fas fa-envelope"></span>
-              <input type="email" placeholder="email" />
+            <div className="inputBox">
+              <i className="ri-mail-line"></i>
+              <input type="email" name="email" placeholder="Email" value={form.email} onChange={update} required />
             </div>
-            <div class="inputBox">
-              <span class="fas fa-phone"></span>
-              <input type="number" placeholder="number" />
+            <div className="inputBox">
+              <i className="ri-phone-line"></i>
+              <input type="tel" name="phone" placeholder="Number" value={form.phone} onChange={update} />
             </div>
-            <button onClick={() => alert('Thanks for Contuct Us !')} type="submit" className="addTOCart__btn"> Contact </button>
+            <div className="inputBox">
+              <i className="ri-message-2-line"></i>
+              <textarea name="message" rows={4} placeholder="Message" value={form.message} onChange={update} />
+            </div>
+            <button type="submit" className="addTOCart__btn">Contact</button>
           </form>
         </div>
       </section>
-    </>
+    </Helmet>
   );
 };
 

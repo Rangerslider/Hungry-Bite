@@ -10,7 +10,9 @@ import "../../../styles/slider.css";
 const TestimonialSlider = () => {
   const settings = {
     dots: true,
+    arrows: false,
     autoplay: true,
+    pauseOnHover: true,
     infinite: true,
     speed: 1000,
     autoplaySpeed: 3000,

@@ -19,39 +19,46 @@ const Cart = () => {
           <Row>
             <Col lg="12">
               {cartItems.length === 0 ? (
-                <h5 className="text-center">Your cart is empty</h5>
+                <div className="empty__state">
+                  <i className="ri-shopping-basket-2-line"></i>
+                  <h5>Your cart is empty</h5>
+                </div>
               ) : (
-                <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Image</th>
-                      <th>Product Title</th>
-                      <th>Price</th>
-                      <th>Quantity</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cartItems.map((item) => (
-                      <Tr item={item} key={item.id} />
-                    ))}
-                  </tbody>
-                </table>
+                <div className="table-responsive">
+                  <table className="table table-bordered align-middle cart__table">
+                    <thead>
+                      <tr>
+                        <th>Image</th>
+                        <th>Product Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cartItems.map((item) => (
+                        <Tr item={item} key={item.id} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
 
-              <div className="mt-4">
+              <div className="mt-4 cart__summary">
                 <h6>
                   Subtotal: $
                   <span className="cart__subtotal">{totalAmount}</span>
                 </h6>
                 <p>Taxes and shipping will calculate at checkout</p>
-                <div className="cart__page-btn">
-                  <button className="addTOCart__btn me-4">
-                    <Link to="/foods">Continue</Link>
-                  </button>
-                  <button className="addTOCart__btn">
-                    <Link to="/checkout">Checkout</Link>
-                  </button>
+                <div className="cart__page-btn d-flex flex-wrap gap-3">
+                  <Link to="/foods" className="addTOCart__btn">
+                    Continue
+                  </Link>
+                  {cartItems.length > 0 && (
+                    <Link to="/checkout" className="addTOCart__btn">
+                      Checkout
+                    </Link>
+                  )}
                 </div>
               </div>
             </Col>
@@ -70,15 +77,17 @@ const Tr = (props) => {
     dispatch(cartActions.deleteItem(id));
   };
   return (
-    <tr>
+    <tr className="card-anim">
       <td className="text-center cart__img-box">
         <img src={image01} alt="" />
       </td>
       <td className="text-center">{title}</td>
       <td className="text-center">${price}</td>
-      <td className="text-center">{quantity}px</td>
+      <td className="text-center">{quantity}</td>
       <td className="text-center cart__item-del">
-        <i class="ri-delete-bin-line" onClick={deleteItem}></i>
+        <button type="button" aria-label={`Remove ${title}`} onClick={deleteItem}>
+          <i className="ri-delete-bin-line"></i>
+        </button>
       </td>
     </tr>
   );

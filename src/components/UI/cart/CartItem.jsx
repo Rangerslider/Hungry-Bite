@@ -32,29 +32,29 @@ const CartItem = ({ item }) => {
 
   return (
     <ListGroupItem className="border-0 cart__item">
-      <div className="cart__item-info d-flex gap-2">
+      <div className="cart__item-info d-flex align-items-center gap-3">
         <img src={image01} alt="product-img" />
 
-        <div className="cart__product-info w-100 d-flex align-items-center gap-4 justify-content-between">
+        <div className="cart__product-info w-100 d-flex align-items-center gap-3 justify-content-between">
           <div>
             <h6 className="cart__product-title">{title}</h6>
-            <p className=" d-flex align-items-center gap-5 cart__product-price">
+            <p className=" d-flex align-items-center gap-3 cart__product-price">
               {quantity}x <span>${totalPrice}</span>
             </p>
             <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
-              <span className="increase__btn" onClick={incrementItem}>
-                <i class="ri-add-line"></i>
-              </span>
+              <button type="button" className="increase__btn" aria-label="Increase" onClick={incrementItem}>
+                <i className="ri-add-line"></i>
+              </button>
               <span className="quantity">{quantity}</span>
-              <span className="decrease__btn" onClick={decreaseItem}>
-                <i class="ri-subtract-line"></i>
-              </span>
+              <button type="button" className="decrease__btn" aria-label="Decrease" onClick={decreaseItem}>
+                <i className="ri-subtract-line"></i>
+              </button>
             </div>
           </div>
 
-          <span className="delete__btn" onClick={deleteItem}>
-            <i class="ri-close-line"></i>
-          </span>
+          <button type="button" className="delete__btn" aria-label="Remove item" onClick={deleteItem}>
+            <i className="ri-close-line"></i>
+          </button>
         </div>
       </div>
     </ListGroupItem>

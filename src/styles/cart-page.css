@@ -1,6 +1,7 @@
 /* cart folder er cart page er css */
 th{
     text-align: center;
+    white-space: nowrap;
 }
 
 .cart__img-box{
@@ -8,15 +9,26 @@ th{
 }
 
 .cart__img-box img {
-    width: 100%;
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
-.cart__item-del i {
+.cart__item-del button {
+    border: none;
+    background: transparent;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.1rem;
     cursor: pointer;
+    transition: background 0.2s, color 0.2s;
 }
 
-.cart__page-btn button a:hover {
-    color: #fff;
+.cart__item-del button:hover {
+    background: #ef535022;
+    color: #ef5350;
 }
 
 .cart__subtotal {
@@ -27,6 +39,20 @@ th{
 @media only screen and (max-width: 768px) {
     th,
     td {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    }
+
+    .cart__table td {
+        min-width: 80px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .cart__summary {
+        text-align: center;
+    }
+
+    .cart__page-btn {
+        justify-content: center;
     }
 }

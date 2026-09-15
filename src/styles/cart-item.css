@@ -1,16 +1,19 @@
 /* cart folder er cartitem er css ekhane  */
 .cart__item-info img{
-    width:35px ;
-    height: 35px ;
+    width: 56px;
+    height: 56px;
     object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 .cart__product-title{
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
 }
 
 .cart__product-price{
     font-size: 0.8rem;
+    margin-bottom: 6px;
 }
 
 .cart__product-price span{
@@ -20,33 +23,45 @@
 }
 
 .increase__decrease-btn{
+    width: 104px;
     background: #61dafb63;
-    padding: 2px 5px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
+    padding: 2px 4px;
+    border-radius: 20px;
 }
 
 .increase__btn,
-.decrease__btn {
+.decrease__btn,
+.delete__btn {
+    border: none;
+    background: transparent;
+    color: #212245;
     cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.increase__btn:hover,
+.decrease__btn:hover {
+    background: #ffffffaa;
 }
 
 .delete__btn {
-
     font-size: 1.1rem;
     font-weight: 600;
 }
 
-.cart__item {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #61dafb63;
+.delete__btn:hover {
+    background: #ef535022;
+    color: #ef5350;
 }
 
-@media only screen and (max-width: 576px) {
- .delete__btn {
-    font-size: 1rem;
-  }
+.cart__item {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #61dafb63 !important;
+    animation: cardIn 0.35s ease both;
 }

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from "reactstrap";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
+import { showToast } from "../store/ui/toastSlice";
 
 import "../styles/checkout.css";
 
@@ -12,7 +13,8 @@ const Checkout = () => {
   const [enterNumber, setEnterNumber] = useState("");
   const [enterCountry, setEnterCountry] = useState("");
   const [enterAddress, setEnterAddress] = useState("");
-  
+  const dispatch = useDispatch();
+
   const shippingInfo = [];
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const shippingCost = 30;
@@ -27,11 +29,12 @@ const Checkout = () => {
       phone: enterNumber,
       country: enterCountry,
       Address: enterAddress,
-      
+
     };
 
     shippingInfo.push(userShippingAddress);
     console.log(shippingInfo);
+    dispatch(showToast("Successfully Added Your Payment !"));
   };
 
   return (
@@ -62,7 +65,7 @@ const Checkout = () => {
                 </div>
                 <div className="form__group">
                   <input
-                    type="number"
+                    type="tel"
                     placeholder="Phone number"
                     required
                     onChange={(e) => setEnterNumber(e.target.value)}
@@ -84,7 +87,7 @@ const Checkout = () => {
                     onChange={(e) => setEnterAddress(e.target.value)}
                   />
                 </div>
-                <button onClick={() => alert('Successfully Added Your Payment !')} type="submit" className="addTOCart__btn">  Payment </button>
+                <button type="submit" className="addTOCart__btn">Payment</button>
               </form>
             </Col>
 

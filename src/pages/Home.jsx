@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import Helmet from "../components/Helmet/Helmet.js";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import "../styles/hero-section.css";
@@ -22,9 +22,6 @@ import style from "../assets/pic/11.png";
 import style1 from "../assets/pic/sushi.png";
 import TestimonialSlider from "../components/UI/hero-slider/TestimonialSlider.jsx";
 
-
-
-
 const featureData = [
   {
     title: "Quick Delivery",
@@ -44,117 +41,85 @@ const featureData = [
   },
 ];
 
+// menu filter buttons; `value` matches products[].category
+const menuFilters = [
+  { label: "All", value: "ALL" },
+  { label: "Breakfast", value: "Breakfast", img: foodCategoryImg05 },
+  { label: "Burger", value: "Burger", img: foodCategoryImg01 },
+  { label: "Pizza", value: "Pizza", img: foodCategoryImg02 },
+  { label: "Lunch", value: "Lunch", img: foodCategoryImg04 },
+  { label: "Bread", value: "Bread", img: foodCategoryImg03 },
+];
 
+const hotPizza = products.filter((item) => item.category === "Pizza").slice(0, 4);
 
 const Home = () => {
   const [category, setCategory] = useState("ALL");
-  const [allProducts, setAllProducts] = useState(products);
 
-  const [hotPizza, setHotPizza] = useState([]);
+  const allProducts = useMemo(
+    () =>
+      category === "ALL"
+        ? products
+        : products.filter((item) => item.category === category),
+    [category]
+  );
 
-  useEffect(() => {
-    const filteredPizza = products.filter((item) => item.category === "Pizza");
-    const slicePizza = filteredPizza.slice(0, 4);
-    setHotPizza(slicePizza);
-  }, []);
-
-  useEffect(() => {
-    if (category === "ALL") {
-      setAllProducts(products);
-    }
-
-    if (category === "BURGER") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Burger"
-      );
-
-      setAllProducts(filteredProducts);
-    }
-
-    if (category === "PIZZA") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Pizza"
-      );
-
-      setAllProducts(filteredProducts);
-    }
-
-    if (category === "LUNCH") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Lunch"
-      );
-
-      setAllProducts(filteredProducts);
-    }
-    if (category === "BREAKFAST") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Breakfast"
-      );
-
-      setAllProducts(filteredProducts);
-    }
-
-    if (category === "BREAD") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Bread"
-      );
-
-      setAllProducts(filteredProducts);
-    }
-  }, [category]);
-
+  const scrollToMenu = () => {
+    document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <Helmet title="Home">
-      <section>
+      <section className="hero">
         <Container>
-          <Row>
-            <Col lg="6" md="6">
-              <div className="hero__content  ">
-                <h4 className="mb-3">Easy way to make an order</h4>
+          <Row className="align-items-center">
+            <Col lg="6">
+              <div className="hero__content">
+                <h4 className="mb-3 hero__eyebrow">Easy way to make an order</h4>
                 <h1 className="mb-4 hero__title">
                   <span>HUNGRY?</span> Just wait <br />Order food
                   <span> at here</span>
                 </h1>
 
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br />Qui
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui
                   magni delectus tenetur autem, sint veritatis!
                 </p>
 
-                <div className="hero__btns d-flex align-items-center gap-5 mt-4">
-                  <button className="order__btn d-flex align-items-center justify-content-between">
-                    Order now <i class="ri-arrow-right-s-line"></i>
+                <div className="hero__btns d-flex align-items-center mt-4">
+                  <button
+                    type="button"
+                    className="order__btn d-flex align-items-center justify-content-between"
+                    onClick={scrollToMenu}
+                  >
+                    Order now <i className="ri-arrow-right-s-line"></i>
                   </button>
 
-                  <button className="all__foods-btn">
-                    <Link to="/foods">See all foods</Link>
-                  </button>
+                  <Link to="/foods" className="all__foods-btn">
+                    See all foods
+                  </Link>
                 </div>
 
-                <div className=" hero__service  d-flex align-items-center gap-5 mt-5 ">
-                  <p className=" d-flex align-items-center gap-2 ">
+                <div className="hero__service d-flex align-items-center mt-5">
+                  <p className="d-flex align-items-center gap-2">
                     <span className="shipping__icon">
-                      <i class="ri-car-line"></i>
-                    </span>{" "}
+                      <i className="ri-car-line"></i>
+                    </span>
                     No shipping charge
                   </p>
 
-                  <p className=" d-flex align-items-center gap-2 ">
+                  <p className="d-flex align-items-center gap-2">
                     <span className="shipping__icon">
-                      <i class="ri-shield-check-line"></i>
-                    </span>{" "}
+                      <i className="ri-shield-check-line"></i>
+                    </span>
                     100% secure checkout
                   </p>
                 </div>
               </div>
             </Col>
 
-            <Col lg="6" md="6">
-              <div className="hero__img">
-                {/* -----using better ui that's why change here ---  */}
-                {/* <img src={heroImg}  alt="hero-img" className="w-100" />  */} 
-              </div>
+            <Col lg="6">
+              <div className="hero__img reveal reveal-zoom" role="img" aria-label="Breakfast plate"></div>
             </Col>
           </Row>
         </Container>
@@ -167,7 +132,7 @@ const Home = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="12" className="text-center">
+            <Col lg="12" className="text-center reveal">
               <h3 className="feature__subtitle mb-4">What we serve</h3>
               <h2 className="feature__title">Just sit back at home</h2>
               <h2 className="feature__title">
@@ -179,19 +144,18 @@ const Home = () => {
               </p>
               <p className="feature__text">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Aperiam, eius.{" "}
+                Aperiam, eius.
               </p>
             </Col>
 
             {featureData.map((item, index) => (
-              <Col lg="4" md="6" sm="6" key={index} className="mt-5">
-                <div className="feature__item text-center px-5 py-3">
-                  <img
-                    src={item.imgUrl}
-                    alt="feature-img"
-                    className="w-25 mb-3"
-                  />
-                  <h5 className=" fw-bold mb-3">{item.title}</h5>
+              <Col lg="4" md="4" key={index} className="mt-5">
+                <div
+                  className="feature__item text-center px-4 py-3 reveal"
+                  style={{ "--reveal-delay": `${index * 120}ms` }}
+                >
+                  <img src={item.imgUrl} alt="feature-img" className="mb-3" />
+                  <h5 className="fw-bold mb-3">{item.title}</h5>
                   <p>{item.desc}</p>
                 </div>
               </Col>
@@ -203,8 +167,8 @@ const Home = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="12" className="text-center">
-              <h3 className="about-btn">ABOUT US</h3><br /><br />
+            <Col lg="12" className="text-center reveal">
+              <h3 className="about-btn mb-4">ABOUT US</h3>
               <h2 className="feature__title">Discover Our</h2>
               <h2 className="feature__title">
                 Awsome <span> Restaurant Story</span>
@@ -213,97 +177,59 @@ const Home = () => {
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor,
                 officiis?
               </p>
-              <p className="feature__text">
+              <p className="feature__text mb-5">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Aperiam, eius.{" "}<br /><br />
+                Aperiam, eius.
               </p>
             </Col>
-            <Col lg="6" md="6">
-              <div className="about__img">
-                <img src={aboutImg}  alt="about-img" className="w-100" />
+            <Col lg="12">
+              <div className="about__img reveal reveal-zoom">
+                <img src={aboutImg} alt="about-img" />
               </div>
             </Col>
           </Row>
         </Container>
       </section>
 
-
-      <section>
+      <section id="menu">
         <Container>
           <Row>
-            <Col lg="12" className="text-center">
-            <h3 className="about-btn">Our Menu</h3><br /><br />
-            <h2 className="feature__title">Wake Up Early,</h2>
-              <h2 className="feature__title">
-              Eat Fresh <span> & Healthy</span>
-              </h2><br /><br />
+            <Col lg="12" className="text-center reveal">
+              <h3 className="about-btn mb-4">Our Menu</h3>
+              <h2 className="feature__title">Wake Up Early,</h2>
+              <h2 className="feature__title mb-5">
+                Eat Fresh <span> & Healthy</span>
+              </h2>
             </Col>
 
             <Col lg="12">
-              <div className="food__category d-flex align-items-center justify-content-center gap-4">
-                <button
-                  className={`all__btn  ${
-                    category === "ALL" ? "foodBtnActive" : ""
-                  } `}
-                  onClick={() => setCategory("ALL")}
-                >
-                  All
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "BREAKFAST" ? "foodBtnActive" : ""
-                  } `}
-                  onClick={() => setCategory("BREAKFAST")}
-                >
-                  <img src={foodCategoryImg05} alt="" />
-                  Breakfast
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "BURGER" ? "foodBtnActive" : ""
-                  } `}
-                  onClick={() => setCategory("BURGER")}
-                >
-                  <img src={foodCategoryImg01} alt="" />
-                  Burger
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "PIZZA" ? "foodBtnActive" : ""
-                  } `}
-                  onClick={() => setCategory("PIZZA")}
-                >
-                  <img src={foodCategoryImg02} alt="" />
-                  Pizza
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "LUNCH" ? "foodBtnActive" : ""
-                  } `}
-                  onClick={() => setCategory("LUNCH")}
-                >
-                  <img src={foodCategoryImg04} alt="" />
-                  Lunch
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "BREAD" ? "foodBtnActive" : ""
-                  } `}
-                  onClick={() => setCategory("BREAD")}
-                >
-                  <img src={foodCategoryImg03} alt="" />
-                  Bread
-                </button>
+              <div className="food__category d-flex align-items-center justify-content-center">
+                {menuFilters.map((filter) => (
+                  <button
+                    type="button"
+                    key={filter.value}
+                    className={`d-flex align-items-center gap-2 ${
+                      category === filter.value ? "foodBtnActive" : ""
+                    }`}
+                    aria-pressed={category === filter.value}
+                    onClick={() => setCategory(filter.value)}
+                  >
+                    {filter.img && <img src={filter.img} alt="" />}
+                    {filter.label}
+                  </button>
+                ))}
               </div>
             </Col>
 
-            {allProducts.map((item) => (
-              <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
+            {allProducts.map((item, index) => (
+              <Col
+                lg="3"
+                md="4"
+                xs="6"
+                key={`${category}-${item.id}`}
+                className="mt-4 card-anim"
+                style={{ animationDelay: `${Math.min(index, 11) * 50}ms` }}
+              >
                 <ProductCard item={item} />
               </Col>
             ))}
@@ -311,68 +237,67 @@ const Home = () => {
         </Container>
       </section>
 
-      <section class="two-col-sec section">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-5">
-                            <div class="sec-img mt-5">
-                                <img src={style}  alt="style-img" className="w-100" /> 
-                            </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="sec-text">
-                                <h2 class="xxl-title">Chicken Pepperoni</h2>
-                                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet dolores
-                                    eligendi earum eveniet soluta officiis asperiores repellat, eum praesentium nihil
-                                    totam. Non ipsa expedita repellat atque mollitia praesentium assumenda quo
-                                    distinctio excepturi nobis tenetur, cum ab vitae fugiat hic aspernatur? Quos
-                                    laboriosam, repudiandae exercitationem atque a excepturi vel. Voluptas, ipsa.</p>
-                                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. At fugit laborum
-                                    voluptas magnam sed ad illum? Minus officiis quod deserunt.</p>
+      <section className="two-col-sec section">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-5">
+              <div className="sec-img reveal reveal-left">
+                <img src={style} alt="style-img" className="w-100" />
+              </div>
+            </div>
+            <div className="col-lg-7">
+              <div className="sec-text reveal reveal-right">
+                <h2 className="xxl-title">Chicken Pepperoni</h2>
+                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet dolores
+                  eligendi earum eveniet soluta officiis asperiores repellat, eum praesentium nihil
+                  totam. Non ipsa expedita repellat atque mollitia praesentium assumenda quo
+                  distinctio excepturi nobis tenetur, cum ab vitae fugiat hic aspernatur? Quos
+                  laboriosam, repudiandae exercitationem atque a excepturi vel. Voluptas, ipsa.</p>
+                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. At fugit laborum
+                  voluptas magnam sed ad illum? Minus officiis quod deserunt.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="two-col-sec section pt-0">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 order-lg-1 order-2">
-                            <div class="sec-text">
-                                <h2 class="xxl-title">Shushi Soseges</h2>
-                                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet dolores
-                                    eligendi earum eveniet soluta officiis asperiores repellat, eum praesentium nihil
-                                    totam. Non ipsa expedita repellat atque mollitia praesentium assumenda quo
-                                    distinctio excepturi nobis tenetur, cum ab vitae fugiat hic aspernatur? Quos
-                                    laboriosam, repudiandae exercitationem atque a excepturi vel. Voluptas, ipsa.</p>
-                                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. At fugit laborum
-                                    voluptas magnam sed ad illum? Minus officiis quod deserunt.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 order-lg-2 order-1">
-                            <div class="sec-img">
-                            <img src={style1}  alt="style1-img" className="w-100" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <section className="two-col-sec section pt-0">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-6 order-lg-1 order-2">
+              <div className="sec-text reveal reveal-left">
+                <h2 className="xxl-title">Shushi Soseges</h2>
+                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet dolores
+                  eligendi earum eveniet soluta officiis asperiores repellat, eum praesentium nihil
+                  totam. Non ipsa expedita repellat atque mollitia praesentium assumenda quo
+                  distinctio excepturi nobis tenetur, cum ab vitae fugiat hic aspernatur? Quos
+                  laboriosam, repudiandae exercitationem atque a excepturi vel. Voluptas, ipsa.</p>
+                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. At fugit laborum
+                  voluptas magnam sed ad illum? Minus officiis quod deserunt.</p>
+              </div>
+            </div>
+            <div className="col-lg-6 order-lg-2 order-1">
+              <div className="sec-img reveal reveal-right">
+                <img src={style1} alt="style1-img" className="w-100" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="why__choose-us">
         <Container>
-          <Row>
-            <Col lg="6" md="6">
-            <div class="why__img">
-              <img src={whyImg} alt="why-tasty-treat" className="w-100" />
+          <Row className="align-items-center">
+            <Col lg="6">
+              <div className="why__img reveal reveal-left">
+                <img src={whyImg} alt="why-tasty-treat" className="w-100" />
               </div>
             </Col>
 
-            <Col lg="6" md="6">
-              <div className="why__tasty-treat">
+            <Col lg="6">
+              <div className="why__tasty-treat reveal reveal-right">
                 <h2 className="tasty__treat-title mb-4">
-                    Why <span>Tasty Treat?</span>
+                  Why <span>Tasty Treat?</span>
                 </h2>
                 <p className="tasty__treat-desc">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -383,8 +308,8 @@ const Home = () => {
 
                 <ListGroup className="mt-4">
                   <ListGroupItem className="border-0 ps-0">
-                    <p className=" choose__us-title d-flex align-items-center gap-2 ">
-                      <i class="ri-checkbox-circle-line"></i> Fresh and tasty
+                    <p className="choose__us-title d-flex align-items-center gap-2">
+                      <i className="ri-checkbox-circle-line"></i> Fresh and tasty
                       foods
                     </p>
                     <p className="choose__us-desc">
@@ -394,8 +319,8 @@ const Home = () => {
                   </ListGroupItem>
 
                   <ListGroupItem className="border-0 ps-0">
-                    <p className="choose__us-title d-flex align-items-center gap-2 ">
-                      <i class="ri-checkbox-circle-line"></i> Quality support
+                    <p className="choose__us-title d-flex align-items-center gap-2">
+                      <i className="ri-checkbox-circle-line"></i> Quality support
                     </p>
                     <p className="choose__us-desc">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -404,9 +329,9 @@ const Home = () => {
                   </ListGroupItem>
 
                   <ListGroupItem className="border-0 ps-0">
-                    <p className="choose__us-title d-flex align-items-center gap-2 ">
-                      <i class="ri-checkbox-circle-line"></i>Order from any
-                      location{" "}
+                    <p className="choose__us-title d-flex align-items-center gap-2">
+                      <i className="ri-checkbox-circle-line"></i>Order from any
+                      location
                     </p>
                     <p className="choose__us-desc">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -423,13 +348,15 @@ const Home = () => {
       <section className="pt-0">
         <Container>
           <Row>
-            <Col lg="12" className="text-center mb-5 ">
+            <Col lg="12" className="text-center mb-2 reveal">
               <h2>Hot Pizza</h2>
             </Col>
 
-            {hotPizza.map((item) => (
-              <Col lg="3" md="4" sm="6" xs="6" key={item.id}>
-                <ProductCard item={item} />
+            {hotPizza.map((item, index) => (
+              <Col lg="3" md="4" xs="6" key={item.id}>
+                <div className="reveal" style={{ "--reveal-delay": `${index * 100}ms` }}>
+                  <ProductCard item={item} />
+                </div>
               </Col>
             ))}
           </Row>
@@ -438,9 +365,9 @@ const Home = () => {
 
       <section>
         <Container>
-          <Row>
-            <Col lg="6" md="6">
-              <div className="testimonial ">
+          <Row className="align-items-center">
+            <Col lg="6">
+              <div className="testimonial reveal reveal-left">
                 <h5 className="testimonial__subtitle mb-4">Review</h5>
                 <h2 className="testimonial__title mb-4">
                   What our <span>customers</span> are saying
@@ -453,9 +380,9 @@ const Home = () => {
                 <TestimonialSlider />
               </div>
             </Col>
-            <Col lg="6" md="6">
-            <div class="why__img">
-              <img src={networkImg} alt="testimonial-img" className="w-100" />
+            <Col lg="6">
+              <div className="why__img testimonial__img reveal reveal-right">
+                <img src={networkImg} alt="testimonial-img" className="w-100" />
               </div>
             </Col>
           </Row>

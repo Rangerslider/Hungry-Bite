@@ -1,12 +1,13 @@
 .footer {
     padding-top: 50px;
-    padding-bottom: 30px;
+    padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
     background: #61dafb80;
     background-image: url("../assets/pic/footer-bg.png");
+    background-size: cover;
   }
-  
+
 .footer__logo img {
-  width: calc(100% - 80%);
+  width: 64px;
   margin-bottom: 5px;
 }
 
@@ -25,13 +26,13 @@
 .delivery__time-item {
   background: transparent !important;
 }
-  
+
 .delivery__time-item span {
   font-weight: 600;
   font-size: 1rem;
   color: #212245;
 }
-  
+
 .delivery__time-item p {
   color: #212245;
 }
@@ -45,51 +46,55 @@
 .newsletter {
   padding: 5px;
   border: 1px solid #212245;
-  border-radius: 5px;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
+  gap: 8px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.newsletter:focus-within {
+  border-color: #61dafb;
+  box-shadow: 0 0 0 3px #61dafb55;
 }
 
 .newsletter input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
   background: transparent;
   border: none;
   outline: none;
 }
 
-.newsletter input:focus {
-  outline: none;
-}
-
-.newsletter span {
+.newsletter button {
+  border: none;
   background: #61dafb;
-  padding: 5px 30px;
-  border-radius: 5px;
+  padding: 6px 22px;
+  border-radius: 6px;
+  color: #fff;
+  transition: transform 0.2s;
 }
 
-.newsletter span i {
-  color: #fff;
+.newsletter button:hover {
+  transform: translateX(3px);
 }
 
 .newsletter input::placeholder {
   color: #212245;
 }
-.social__links{
-  padding: 100px;
-  height: 0px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  cursor: pointer;
-  padding-top: 0px;
-  
-  
 
+.social__links {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 14px;
 }
-.social__links span i {
-  width: 50px;
-  height: 50px;
+
+.social__links a i {
+  width: 48px;
+  height: 48px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -98,6 +103,13 @@
   box-shadow: 4px 4px 8px #d0d0d0, -4px -4px 8px #ffffff;
   color:  #61dafb;
   font-size: 19px;
+  transition: transform 0.3s, background 0.3s, color 0.3s;
+}
+
+.social__links a:hover i {
+  transform: translateY(-4px);
+  background: #61dafb;
+  color: #fff;
 }
 
 .copyright__text {
@@ -105,45 +117,32 @@
   color: #212245;
 }
 
-@media only screen and (max-width: 992px) {
-  .newsletter input {
-    padding: 7px;
-    font-size: 0.7rem;
-  }
-  .newsletter span {
-    padding: 4px 20px;
-    font-size: 0.7rem;
-  }
-}
-  
 @media only screen and (max-width: 768px) {
   .footer__title {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
-  
+
   .delivery__time-item span {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
-  
+
   .delivery__time-item p {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     margin-bottom: 0;
   }
-}
 
-@media only screen and (max-width: 576px) {
   .copyright__text {
+    font-size: 0.9rem;
     text-align: center;
   }
-  
-  .social__links p {
-    font-size: 0.8rem;
+
+  .social__links {
+    justify-content: center;
   }
-  
-  .social__links span {
-    padding: 4px;
-  }
-  .social__links span a {
-    font-size: 0.7rem;
+
+  .social__links a i {
+    width: 42px;
+    height: 42px;
+    font-size: 17px;
   }
 }

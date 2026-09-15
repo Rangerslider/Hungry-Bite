@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
+import { useDispatch } from "react-redux";
 import logo from "../../assets/images/res1-logo.png";
+import { showToast } from "../../store/ui/toastSlice";
 
 import "../../styles/footer.css";
 
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+
+  const subscribe = (e) => {
+    e.preventDefault();
+    dispatch(showToast("Thanks for subscribing!"));
+    setEmail("");
+  };
+
   return (
     <footer className="footer">
       <Container>
-        <Row>
-          <Col lg="3" md="4" sm="6">
+        <Row className="gy-4">
+          <Col lg="3" sm="6">
             <div className=" footer__logo text-start">
               <img src={logo} alt="logo" />
               <h5>Hungry Bite</h5>
@@ -22,8 +33,8 @@ const Footer = () => {
             </div>
           </Col>
 
-          <Col lg="3" md="4" sm="6">
-            <h5 className="footer__title"> Opining Time</h5>
+          <Col lg="3" sm="6">
+            <h5 className="footer__title">Opening Time</h5>
             <ListGroup className="deliver__time-list">
               <ListGroupItem className=" delivery__time-item border-0 ps-0">
                 <span>Sunday - Thursday</span>
@@ -37,7 +48,7 @@ const Footer = () => {
             </ListGroup>
           </Col>
 
-          <Col lg="3" md="4" sm="6">
+          <Col lg="3" sm="6">
             <h5 className="footer__title">Contact</h5>
             <ListGroup className="deliver__time-list">
               <ListGroupItem className=" delivery__time-item border-0 ps-0">
@@ -53,54 +64,47 @@ const Footer = () => {
             </ListGroup>
           </Col>
 
-          <Col lg="3" md="4" sm="6">
+          <Col lg="3" sm="6">
             <h5 className="footer__title">Newsletter</h5>
             <p>Subscribe our </p>
-            <div className="newsletter">
-              <input type="email" placeholder="Enter your email" />
-              <span>
-                <i class="ri-send-plane-line"></i>
-              </span>
-            </div>
+            <form className="newsletter" onSubmit={subscribe}>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                aria-label="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <button type="submit" aria-label="Subscribe">
+                <i className="ri-send-plane-line"></i>
+              </button>
+            </form>
           </Col>
         </Row>
 
-        <Row className="mt-5">
-          <Col lg="6" md="6">
-            <p className="copyright__text">
+        <Row className="mt-5 align-items-center gy-3">
+          <Col md="6">
+            <p className="copyright__text mb-0">
               Copyright - 2023, website made by Ishmoth Ura Nuri. All Rights
               Reserved.
             </p>
           </Col>
           {/* social media links for contact details */}
-          <Col lg="6" md="6">
+          <Col md="6">
             <div className="social__links">
-              <span>
-                {" "}
-                <Link to="">
-                  <i class="ri-facebook-line"></i>
-                </Link>{" "}
-              </span>
-
-              <span>
-                <Link to="">
-                  <i class="ri-github-line"></i>
-                </Link>
-              </span>
-
-              <span>
-                {" "}
-                <Link to=" ">
-                  <i class="ri-youtube-line"></i>
-                </Link>{" "}
-              </span>
-
-              <span>
-                {" "}
-                <Link to=" ">
-                  <i class="ri-linkedin-line"></i>
-                </Link>{" "}
-              </span>
+              <Link to="" aria-label="Facebook">
+                <i className="ri-facebook-line"></i>
+              </Link>
+              <Link to="" aria-label="GitHub">
+                <i className="ri-github-line"></i>
+              </Link>
+              <Link to="" aria-label="YouTube">
+                <i className="ri-youtube-line"></i>
+              </Link>
+              <Link to="" aria-label="LinkedIn">
+                <i className="ri-linkedin-line"></i>
+              </Link>
             </div>
           </Col>
         </Row>

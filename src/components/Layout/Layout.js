@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import Routes from "../../routes/Routers";
 import Carts from "../UI/cart/Carts.jsx";
-import { useSelector } from "react-redux";
+import Toast from "../UI/toast/Toast.jsx";
+import BackToTop from "../UI/back-to-top/BackToTop.jsx";
+import useScrollReveal from "../../hooks/useScrollReveal";
 
 const Layout = () => {
-  const showCart = useSelector((state) => state.cartUi.cartIsVisible);
+  const { pathname } = useLocation();
+  useScrollReveal();
+
+  // start every page at the top
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <div>
       <Header />
-      {showCart && <Carts />}
-      <div>
+      <Carts />
+      <main>
         <Routes />
-      </div>
+      </main>
       <Footer />
+      <Toast />
+      <BackToTop />
     </div>
   );
 };

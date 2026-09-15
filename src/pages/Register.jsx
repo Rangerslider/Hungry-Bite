@@ -1,16 +1,22 @@
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
+import { showToast } from "../store/ui/toastSlice";
+import "../styles/auth.css";
 
 const Register = () => {
   const signupNameRef = useRef();
   const signupPasswordRef = useRef();
   const signupEmailRef = useRef();
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(showToast("Successfully Sign Up!"));
+    e.target.reset();
   };
 
   return (
@@ -19,8 +25,8 @@ const Register = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="6" md="6" sm="12" className="m-auto text-center">
-              <form className="form mb-5" onSubmit={submitHandler}>
+            <Col lg="5" md="8" className="m-auto text-center">
+              <form className="form auth__form mb-4 reveal" onSubmit={submitHandler}>
                 <div className="form__group">
                   <input
                     type="text"
@@ -45,9 +51,11 @@ const Register = () => {
                     ref={signupPasswordRef}
                   />
                 </div>
-                <button onClick={() => alert('Successfully Sign Up!')} type="submit" className="addTOCart__btn"> Sign Up </button>
+                <button type="submit" className="addTOCart__btn">Sign Up</button>
               </form>
-              <Link to="/login">Already have an account? Login</Link>
+              <Link to="/login" className="auth__link">
+                Already have an account? Login
+              </Link>
             </Col>
           </Row>
         </Container>

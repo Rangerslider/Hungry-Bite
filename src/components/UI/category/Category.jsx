@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { Container, Row, Col } from "reactstrap";
 
@@ -33,15 +34,19 @@ const categoryData = [
 const Category = () => {
   return (
     <Container>
-      <Row>
+      <Row className="g-3 g-md-4">
         {categoryData.map((item, index) => (
-          <Col lg="3" md="4" sm="6" xs="6" className="mb-4" key={index}>
-            <div className="category__item d-flex align-items-center gap-3">
+          <Col lg="3" xs="6" key={index}>
+            <Link
+              to="/foods"
+              className="category__item d-flex align-items-center gap-3 reveal"
+              style={{ "--reveal-delay": `${index * 100}ms` }}
+            >
               <div className="category__img">
                 <img src={item.imgUrl} alt="category__item" />
               </div>
               <h6>{item.display}</h6>
-            </div>
+            </Link>
           </Col>
         ))}
       </Row>

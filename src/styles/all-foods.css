@@ -2,28 +2,53 @@
 .sorting__widget select {
     padding: 7px 15px;
     border: 1px solid #61dafb63;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 10px;
+    background: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
+
+.search__widget:focus-within,
+.sorting__widget select:focus {
+    outline: none;
+    border-color: #61dafb;
+    box-shadow: 0 0 0 3px #61dafb44;
+}
+
 .search__widget input {
+    flex: 1;
+    min-width: 0;
     border: none;
+    background: transparent;
 }
 
 .search__widget input:focus {
     outline: none;
 }
 
+.search__widget button {
+    border: none;
+    background: transparent;
+    color: #777;
+    padding: 0;
+}
+
+.sorting__widget select {
+    width: min(280px, 100%);
+    height: 42px;
+    cursor: pointer;
+}
+
+.foods__count {
+    color: #777;
+    font-size: 0.9rem;
+}
+
 @media only screen and (max-width: 768px) {
-    .search__widget {
-        width: 100%;
-        margin-bottom: 20px;
-    }
     .search__widget input {
-        width: 100%;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
     .sorting__widget select {
-        width: 100% !important;
-        font-size: 0.8rem;
+        width: 100%;
+        font-size: 0.9rem;
     }
 }
